@@ -1,0 +1,5 @@
+sender@mail.com
+password
+receiver@mail.com
+smtp.mail.com
+(Rename it to login.txt)
