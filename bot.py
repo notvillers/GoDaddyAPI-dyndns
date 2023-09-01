@@ -2,11 +2,19 @@ import subprocess
 import os
 import smtplib, ssl
 from email.mime.text import MIMEText
+import sys
 
 # Command to send to the CLI
 command = "curl ipv4.icanhazip.com"
+# Location argument
+argument1 = ""
+if len(sys.argv) > 1:
+    argument1 = str(sys.argv[1])
+
+if argument1 != "":
+    print("bot.py location: " + argument1)
 # Name of the file, which stores the IP (ipv4)
-file_name = "ip.txt"
+file_name = argument1 + "ip.txt"
 # Some valuables for the script
 file_ready = False
 ip_ready = False
@@ -14,6 +22,12 @@ ip_changed = False
 ip_stored = ""
 ip_got = ""
 send_mail = True
+
+if os.path.exists(argument1+"login.txt"):
+    print("login.txt found")
+else:
+    print("login.txt not found, exiting...")
+    sys.exit()
 
 # Check if file_name exists
 if os.path.exists(file_name):
@@ -31,7 +45,7 @@ if os.path.exists(file_name):
             ip_ready = True
 # If file_name not found then it creates it
 else:
-    print( file_name + " not found")
+    print(file_name + " not found")
     try:
         print("creating " + file_name)
         with open(file_name, 'w'):
@@ -93,7 +107,7 @@ if ip_changed and send_mail:
     # Email configuration
     print("Configuring e-mail service")
     # Reading login.txt
-    with open("login.txt", 'r') as login_data:
+    with open(argument1 + "login.txt", 'r') as login_data:
         login = [line.strip() for line in login_data.readlines()]
     # Mail subject
     subject = "IP Changed (" + hostname + ")"
