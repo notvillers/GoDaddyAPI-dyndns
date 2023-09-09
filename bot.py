@@ -103,7 +103,7 @@ if ip_changed and send_mail:
     process = subprocess.Popen("hostname", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = process.communicate()
     hostname = stdout.decode('utf-8').lstrip().rstrip()
-    print("Hostname found: " + hostname)
+    print("Hostname: " + hostname)
     # Email configuration
     print("Configuring e-mail service")
     # Reading login.txt
@@ -121,7 +121,8 @@ if ip_changed and send_mail:
     # Mail password
     password = login[1]
     pw_hidden = ""
-    for char in password: pw_hidden += "*"
+    for char in password: 
+        pw_hidden += "*"
     print("Password: " + pw_hidden)
     # Mail recipient
     recipients = [login[2]]
