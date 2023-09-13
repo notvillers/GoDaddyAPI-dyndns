@@ -1,7 +1,7 @@
 # IP change detect
 ## Detects if your IPV4 address changed and sends an email about it.
 
-If you do not have or do not want access a DynDNS, this solution can help you survive.
+If you do not have or do not want to access a DynDNS service, this solution can help you survive.
 
 ### login.txt
 On the first run, if you do not have the **login.txt** in the running/working directory, The script will generate an empty one.
