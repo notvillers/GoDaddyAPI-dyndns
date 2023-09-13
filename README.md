@@ -41,4 +41,4 @@ api_secret_example
 ```
 
 > [!IMPORTANT]
-> At the moment, the code is not going to fill the **daddy.txt** with example and won't check if you modified it.
+> At the moment, the code is not going to fill the **daddy_api.txt** with example and won't check if you modified it.
