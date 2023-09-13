@@ -4,14 +4,14 @@
 If you do not have or do not want to access any DynDNS service, this solution can help you survive.
 
 > [!NOTE]
-> GoDaddy DNS API integration is coming, so it will be able to work without any interference.
+> GoDaddy DNS update is going live soon.
 
 ### login.txt
 On the first run, if you do not have the **login.txt** in the running/working directory, The script will generate an empty one. It is necessary for the email sending and should look like this:
 
 ```
 sender@example_mail.com
-password
+example_password
 receiver@example_mail.com
 smtp.example_mail.com
 ```
@@ -28,3 +28,17 @@ If you want to run it with a more simple utility tool, like crontab, where you c
 where `{path_to_directory}` is the full path like `/home/user/bot/`
 
 _In this instance the crontab runs the script every 15 mins._
+
+### GoDaddy DNS update with API
+For this, you need to create and configure a **daddy_api.txt** like this:
+
+```
+example_domain.coms
+example_type (A)
+example_name (@)
+api_key_example
+api_secret_example
+```
+
+> [!IMPORTANT]
+> At the moment, the code is not going to fill the **daddy.txt** with example and won't check if you modified it.
