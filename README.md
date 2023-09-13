@@ -1,7 +1,7 @@
 # IP change detect
 ## Detects if your IPV4 address changed and sends an email about it.
 
-If you do not have or do not want to access a DynDNS service, this solution can help you survive.
+If you do not have or do not want to access any DynDNS service, this solution can help you survive.
 
 > [!NOTE]
 > GoDaddy DNS API integration is coming, so it will be able to work without any interference.
