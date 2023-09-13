@@ -33,7 +33,7 @@ _In this instance the crontab runs the script every 15 mins._
 For this, you need to create and configure a **daddy_api.txt** like this:
 
 ```
-example_domain.coms
+example_domain.com
 example_type (A)
 example_name (@)
 api_key_example
