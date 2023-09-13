@@ -12,7 +12,7 @@ if len(sys.argv) > 1:
     argument1 = str(sys.argv[1])
 
 if argument1 != "":
-    print("bot.py location: " + argument1)
+    print("login.txt location: " + argument1)
 # Name of the file, which stores the IP (ipv4)
 file_name = argument1 + "ip.txt"
 # Some valuables for the script
