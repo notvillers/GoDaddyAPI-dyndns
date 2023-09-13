@@ -3,18 +3,20 @@ import os
 import smtplib, ssl
 from email.mime.text import MIMEText
 import sys
+import time
 
 # Command to send to the CLI
 command = "curl ipv4.icanhazip.com"
+
 # Location argument
 argument1 = ""
 if len(sys.argv) > 1:
     argument1 = str(sys.argv[1])
 
-if argument1 != "":
-    print("login.txt location: " + argument1)
 # Name of the file, which stores the IP (ipv4)
-file_name = argument1 + "ip.txt"
+ip_file = argument1 + "ip.txt"
+login_file = argument1 + "login.txt"
+
 # Some valuables for the script
 file_ready = False
 ip_ready = False
@@ -23,36 +25,32 @@ ip_stored = ""
 ip_got = ""
 send_mail = True
 
-if os.path.exists(argument1+"login.txt"):
-    print("login.txt found")
-else:
-    print("login.txt not found, exiting...")
-    sys.exit()
+# If logint.txt is not found, then generating one
+if not os.path.exists(login_file) and send_mail:
+    print("login.txt not found, generating...")
+    login_example = ["sender@example_mail.com", "password", "receiver@example_mail.com", "smtp.example_mail.com"]
+    with open(login_file, 'w') as file:
+        for line in login_example:
+            file.write(line + "\n")
+    print("login.txt created and filled with example data! \nExiting...")
+    send_mail = False
 
-# Check if file_name exists
-if os.path.exists(file_name):
-    print("ip.txt found")
+# Check if ip.txt exists
+if os.path.exists(ip_file):
     file_ready = True
-    # Read file_name
-    with open(file_name, 'r') as file:
+    # Read ip.txt
+    with open(ip_file, 'r') as file:
         ip_stored = file.read().lstrip().rstrip()
         # Check if it has anything stored inside
-        if ip_stored == "":
-            print("IP stored: empty")
-            ip_ready = False
-        else:
-            print("IP stored: " + ip_stored)
+        if ip_stored != "":
             ip_ready = True
-# If file_name not found then it creates it
+# If ip.txt not found then it creates it
 else:
-    print(file_name + " not found")
-    try:
-        print("creating " + file_name)
-        with open(file_name, 'w'):
-            print(file_name + " created")
-    except Exception as e:
-        print("Error: {str(e)}")
+    print(ip_file + " not found, generating...")
+    with open(ip_file, 'w'):
+        print(ip_file + " created")
 
+# Getting IP
 try:
     # Run the command in the shell and capture the output
     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -61,34 +59,28 @@ try:
     # Check if the command was successful (return code 0)
     if process.returncode == 0:
         # Starting of the IP compare
-        print("Getting IP")
         ip_got = stdout.decode('utf-8').lstrip().rstrip()
-        print("IP got: " + ip_got)
-        # If we got IP stored in file_name (or anything stored in it)
+        # If we got IP stored in ip.txt (or anything stored in it)
         if ip_ready:
             # If the 2 IPs are equal it does nothing
-            if ip_stored == ip_got:
-                print("IP did not change (stored: " + ip_stored + ", got: " + ip_got + ")")
-            # If they are not, then it rewrites the file_name with the new IP
-            else:
-                print("Your IP changed (stored: " + ip_stored + ", got: " + ip_got + ")")
-                print("Storing IP")
-                with open(file_name, 'w') as file:
+            if ip_stored != ip_got:
+                with open(ip_file, 'w') as file:
                     file.write(ip_got)
-                print("IP stored: " + ip_got)
                 ip_changed = True
         # If file_name was empty or it was just created then writes the actual IP in it
         else:
-            print("Storing IP")
-            with open(file_name, 'w') as file:
+            with open(ip_file, 'w') as file:
                 file.write(ip_got)
-            print("IP stored: " + ip_got)
             ip_changed = True
     else:
         # Print any error messages
-        print("Error:", stderr.decode('utf-8'))
+        print("Error (cli):", stderr.decode('utf-8'))
+        time.sleep(5)
+        sys.exit()
 except Exception as e:
-    print("An error occurred:", str(e))
+    print("Error (ip get):", str(e))
+    time.sleep(5)
+    sys.exit()
 
 # Summary for CLI
 print("\n=============== SUMMARY ================")
@@ -98,40 +90,28 @@ print("IP got: " + ip_got)
 
 # If the IP changed, it sends a mail
 if ip_changed and send_mail:
+
     print("\n================= EMAIL =================")
-    # Gets the hostname of the computer for the mail subject
-    process = subprocess.Popen("hostname", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    stdout, stderr = process.communicate()
-    hostname = stdout.decode('utf-8').lstrip().rstrip()
-    print("Hostname: " + hostname)
     # Email configuration
     print("Configuring e-mail service")
     # Reading login.txt
     with open(argument1 + "login.txt", 'r') as login_data:
         login = [line.strip() for line in login_data.readlines()]
-    # Mail subject
-    subject = "IP Changed (" + hostname + ")"
-    print("Subject: " + subject)
-    # Mail body
-    body = "Your IP changed from " + ip_stored + " to " + ip_got + "."
-    print("Body: " + body)
-    # Mail sender
-    sender = login[0]
-    print("Sender: " + sender)
-    # Mail password
-    password = login[1]
-    pw_hidden = ""
-    for char in password: 
-        pw_hidden += "*"
-    print("Password: " + pw_hidden)
-    # Mail recipient
-    recipients = [login[2]]
-    print("Recipient: " + login[2])
-    # Mail SMTP
     smtp = login[3]
-    print("SMTP: " + smtp)
 
-    # Send mail
+    if login[0] == "sender@example_mail.com":
+        print("login.txt is not configured properly.\nExiting...")
+        time.sleep(5)
+        sys.exit()
+
+    # Gets hostname from cli
+    process = subprocess.Popen("hostname", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate()
+    hostname = stdout.decode('utf-8').lstrip().rstrip()
+
+    print("Calling send_email")
+
+    # DEF: send mail
     def send_email(subject, body, sender, recipients, password):
         msg = MIMEText(body)
         msg['Subject'] = subject
@@ -142,6 +122,5 @@ if ip_changed and send_mail:
             smtp_server.login(sender, password)
             smtp_server.sendmail(sender, recipients, msg.as_string())
             print("Message sent!")
-    
-    print("Sending mail")
-    send_email(subject, body, sender, recipients, password)
+
+    send_email("IP change on " + hostname, "Your IP changed from " + ip_stored + " to " + ip_got + ".", login[0], [login[2]], login[1])
