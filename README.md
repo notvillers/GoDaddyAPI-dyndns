@@ -1,4 +1,4 @@
-# IP change detect
+# Daddyndns
 ## Detects if your IPV4 address changed and sends an email about it.
 
 If you do not have or do not want to access any DynDNS service, this solution can help you survive.
