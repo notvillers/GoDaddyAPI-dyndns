@@ -92,8 +92,6 @@ print("IP got: " + ip_got)
 if ip_changed and send_mail:
 
     print("\n================= EMAIL =================")
-    # Email configuration
-    print("Configuring e-mail service")
     # Reading login.txt
     with open(argument1 + "login.txt", 'r') as login_data:
         login = [line.strip() for line in login_data.readlines()]
