@@ -19,7 +19,7 @@ smtp.example_mail.com
 _(Gmail no longer supports sending mail with an 'unsecure' solution like this.)_
 
 ### Running it with a system daemon
-If you want to run it with a more simple utility tool, like crontab, where you can not set a running/working directory, then you can run the **bot.py** with an argument which leads to the directory where the **login.txt** and **ip.txt** are stored, for example:
+If you want to run it with a more simple utility tool, like crontab, where you can not set a running/working directory, then you should run the **bot.py** with an argument which leads to the directory where the **login.txt** and **ip.txt** are stored, for example:
 
 ```
 */15 * * * * python3 {path_to_directory}/bot.py {path_to_directory}
