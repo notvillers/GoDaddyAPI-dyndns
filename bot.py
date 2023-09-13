@@ -4,6 +4,7 @@ import smtplib, ssl
 from email.mime.text import MIMEText
 import sys
 import time
+from godaddypy import Client, Account
 
 # Command to send to the CLI
 command = "curl ipv4.icanhazip.com"
@@ -16,6 +17,7 @@ if len(sys.argv) > 1:
 # Name of the file, which stores the IP (ipv4)
 ip_file = argument1 + "ip.txt"
 login_file = argument1 + "login.txt"
+daddy_api_file = argument1 + "daddy_api.txt"
 
 # Some valuables for the script
 file_ready = False
@@ -24,6 +26,13 @@ ip_changed = False
 ip_stored = ""
 ip_got = ""
 send_mail = True
+daddy_available = False
+api_available = False
+
+# If daddy_api.txt
+if os.path.exists(daddy_api_file):
+    api_available = True
+    daddy_available = True
 
 # If logint.txt is not found, then generating one
 if not os.path.exists(login_file) and send_mail:
@@ -93,11 +102,12 @@ if ip_changed and send_mail:
 
     print("\n================= EMAIL =================")
     # Reading login.txt
-    with open(argument1 + "login.txt", 'r') as login_data:
+    with open(login_file, 'r') as login_data:
         login = [line.strip() for line in login_data.readlines()]
     smtp = login[3]
 
-    if login[0] == "sender@example_mail.com":
+    # login.txt configuration check
+    if login[0] == "sender@example_mail.com" and not api_available:
         print("login.txt is not configured properly.\nExiting...")
         time.sleep(5)
         sys.exit()
@@ -106,8 +116,6 @@ if ip_changed and send_mail:
     process = subprocess.Popen("hostname", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = process.communicate()
     hostname = stdout.decode('utf-8').lstrip().rstrip()
-
-    print("Calling send_email")
 
     # DEF: send mail
     def send_email(subject, body, sender, recipients, password):
@@ -121,4 +129,45 @@ if ip_changed and send_mail:
             smtp_server.sendmail(sender, recipients, msg.as_string())
             print("Message sent!")
 
-    send_email("IP change on " + hostname, "Your IP changed from " + ip_stored + " to " + ip_got + ".", login[0], [login[2]], login[1])
+    # Sending mail
+    print("Calling send_email")
+    send_email(
+        subject = "IP change on " + hostname, 
+        body = "Your IP changed from " + ip_stored + " to " + ip_got + ".", 
+        sender = login[0], 
+        recipients = [login[2]], 
+        password = login[1]
+        )
+
+if api_available and daddy_available:
+    print("\n================ GODADDY ================")
+    # Reading api.txt
+    with open(daddy_api_file, 'r') as file:
+        api_data = [line.strip() for line in file.readlines()]
+    
+    # DEF: GoDaddy API
+    def daddy_api(d_key, d_secret, d_domain, d_type, d_record, d_ip_stored):
+        userAccount = Account(api_key = d_key, api_secret = d_secret)
+        userClient = Client(userAccount)
+        try:
+            currentIP = userClient.get_records(d_domain, record_type = d_type, name = d_record)
+            if (ip_stored != currentIP[0]["data"]):
+                updateResult = userClient.update_record_ip(d_ip_stored, d_domain, d_record, d_type)
+            if updateResult is True:
+                print('Updated DNS record and wrote IP file.')
+            else:
+                print('Checked the DNS record, no update needed.')
+        except:
+            print(sys.exc_info()[1])
+            sys.exit()
+
+    # Sending API call
+    print("Calling daddy_api")
+    daddy_api(
+        d_key = api_data[3], 
+        d_secret = api_data[4], 
+        d_domain = api_data[0], 
+        d_type = api_data[1], 
+        d_record = api_data[2], 
+        d_ip_stored = ip_stored
+        )
