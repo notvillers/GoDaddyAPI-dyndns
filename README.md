@@ -1,5 +1,5 @@
 # Daddyndns
-## Detects if your IPV4 address changed, sends an e-mail about it and updates the GoDaddy DNS record.
+## Detects if your IPV4 has address changed, sends an e-mail about it and updates the GoDaddy DNS record.
 
 If you do not have or do not want to access any DynDNS service, this solution can help you survive.
 
