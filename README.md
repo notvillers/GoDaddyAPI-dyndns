@@ -5,10 +5,10 @@
 On the first run, if you do not have the **login.txt** in the running/working directory, The script will generate an empty one.
 It is necessary for the email sending and should look like this:
 ```
-sender@mail.com
+sender@example_mail.com
 password
-receiver@mail.com
-smtp.mail.com
+receiver@example_mail.com
+smtp.example_mail.com
 ```
 _(Gmail no longer supports sending mail with an 'unsecure' solution like this.)_
 
