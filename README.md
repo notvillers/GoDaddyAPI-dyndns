@@ -4,7 +4,7 @@
 If you do not have or do not want to access any DynDNS service, this solution can help you survive.
 
 > [!NOTE]
-> GoDaddy DNS update is going live soon.
+> GoDaddy API is active, but it is under testing.
 
 ### login.txt
 On the first run, if you do not have the **login.txt** in the running/working directory, The script will generate an empty one. It is necessary for the email sending and should look like this:
