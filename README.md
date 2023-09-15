@@ -3,7 +3,7 @@
 
 If you do not have or do not want to access any DynDNS service, this solution can help you survive.
 
-> [!NOTE]
+> [!WARNING]
 > GoDaddy API is active, but it is under testing.
 
 ### login.txt
@@ -39,3 +39,6 @@ example_name (@)
 api_key_example
 api_secret_example
 ```
+
+> [!NOTE]
+> I planned a log.txt to know what happened in the past with the bot.
