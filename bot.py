@@ -12,7 +12,7 @@ import urllib.request
 # DEF: get IP
 def get_ip():
     with urllib.request.urlopen(urllib.request.Request("https://ipv4.icanhazip.com")) as response:
-        return response.read().decode('utf-8')
+        return str(response.read().decode('utf-8')).lstrip().rstrip()
 
 # DEF: send mail
 def send_email(subject, body, sender, recipients, password):
@@ -58,7 +58,6 @@ daddy_api_file = argument1 + "daddy_api.txt"
 # Some valuables for the script
 file_ready = False
 ip_ready = False
-ip_changed = False
 ip_stored = ""
 ip_got = ""
 send_mail = True
@@ -108,25 +107,23 @@ try:
         if ip_stored != ip_got:
             with open(ip_file, 'w') as file:
                 file.write(ip_got)
-            ip_changed = True
     # If file_name was empty or it was just created then writes the actual IP in it
     else:
         with open(ip_file, 'w') as file:
             file.write(ip_got)
-        ip_changed = True
 except Exception as e:
     print("Error (ip get):", str(e))
     time.sleep(5)
     sys.exit()
 
 # Summary for CLI
-print("\n=============== SUMMARY ================")
-print("IP changed" if ip_changed else "IP not changed")
+print("=============== SUMMARY ================")
+print("IP changed" if ip_stored != ip_got else "IP not changed")
 print("IP stored: empty" if ip_stored == "" else "Stored: " + ip_stored)
 print("IP got: " + ip_got)
 
 # If the IP changed, it sends a mail
-if ip_changed and send_mail:
+if ip_stored != ip_got and send_mail:
 
     print("\n================= EMAIL =================")
     # Reading login.txt
@@ -155,19 +152,22 @@ if ip_changed and send_mail:
         password = login[1]
         )
 
-if api_available and daddy_available:
+if api_available and daddy_available and ip_stored != ip_got:
     print("\n================ GODADDY ================")
     # Reading api.txt
     with open(daddy_api_file, 'r') as file:
         api_data = [line.strip() for line in file.readlines()]
 
     # Sending API call
-    print("Calling daddy_api")
-    daddy_api(
-        d_key = api_data[3], 
-        d_secret = api_data[4], 
-        d_domain = api_data[0], 
-        d_type = api_data[1], 
-        d_record = api_data[2], 
-        d_ip_stored = ip_stored
+    if "example_domain.com" not in api_data[0]:
+        print("Calling daddy_api")
+        daddy_api(
+            d_key = api_data[3], 
+            d_secret = api_data[4], 
+            d_domain = api_data[0], 
+            d_type = api_data[1], 
+            d_record = api_data[2], 
+            d_ip_stored = ip_stored
         )
+    else:
+        print("daddy_api.txt not configured properly")
