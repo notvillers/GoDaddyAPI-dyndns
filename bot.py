@@ -171,3 +171,5 @@ if api_available and daddy_available and ip_stored != ip_got:
         )
     else:
         print("daddy_api.txt not configured properly")
+        
+# Here should come a logger to know what happened.
