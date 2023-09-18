@@ -101,7 +101,7 @@ summary_cli = "IP got: " + ip_got
 log_insert.insert(log_file, summary_cli)
 
 # If the IP changed, it sends a mail
-if (ip_stored != ip_got) and send_mail is True:
+if (ip_stored != ip_got) and (send_mail is True):
     summary_cli = "================= EMAIL ================="
     log_insert.insert(log_file, summary_cli)
     # Reading login.txt
@@ -129,7 +129,7 @@ if (ip_stored != ip_got) and send_mail is True:
         )
         log_insert.insert(log_file, summary_cli)
 
-if api_available is True and daddy_available is True:
+if (ip_stored != ip_got) and (api_available is True) and (daddy_available is True):
     summary_cli = "================ GODADDY ================"
     log_insert.insert(log_file, summary_cli)
     # Reading api.txt
