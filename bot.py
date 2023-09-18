@@ -60,7 +60,7 @@ if os.path.exists(ip_file):
     file_ready = True
     with open(ip_file, 'r') as file:
         ip_stored = file.read().lstrip().rstrip()
-        log_insert.insert(log_file, "stored ip: " + ip_stored)
+        log_insert.insert(log_file, "IP found in " + ip_file + ": " + ip_stored)
         if ip_stored != "":
             ip_ready = True
 else:
@@ -72,19 +72,19 @@ else:
 try:
     # Getting IP
     ip_got = get_ip.get_ip()
-    log_insert.insert(log_file, "ip got: " + ip_got)
+    log_insert.insert(log_file, "IP got from 'icanhazip': " + ip_got)
     # Starting of the IP compare
     if ip_ready:
         # If the 2 IPs are equal it does nothing
         if ip_stored != ip_got:
             with open(ip_file, 'w') as file:
                 file.write(ip_got)
-                log_insert.insert(log_file, "ip rewrote " + ip_stored + " -> " + ip_got)
+                log_insert.insert(log_file, "IP rewrote " + ip_stored + " -> " + ip_got)
     # If file_name was empty or it was just created then writes the actual IP in it
     else:
         with open(ip_file, 'w') as file:
             file.write(ip_got)
-            log_insert.insert(log_file, "no ip stored, storing " + ip_got)
+            log_insert.insert(log_file, "no IP stored, storing " + ip_got)
 except Exception as e:
     print("Error (ip get):", str(e))
     time.sleep(5)
