@@ -7,7 +7,7 @@ import time
 import funct.log_insert as log_insert
 import funct.get_ip as get_ip
 import funct.dns_email as dns_email
-import dns_daddy as dns_daddy
+import funct.dns_daddy as dns_daddy
 
 # Location argument
 argument1 = ""
