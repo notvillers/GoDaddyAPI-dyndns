@@ -119,14 +119,15 @@ if (ip_stored != ip_got) and send_mail is True:
         hostname = stdout.decode('utf-8').lstrip().rstrip()
 
         # Sending mail
-        print(dns_email.send_email(
+        summary_cli = dns_email.send_email(
             subject = "IP change on " + hostname, 
             body = "Your IP changed from " + ip_stored + " to " + ip_got + ".", 
             sender = login[0], 
             recipients = [login[2]], 
             password = login[1],
             smtp = login[3]
-        ))
+        )
+        log_insert.insert(log_file, summary_cli)
 
 if api_available is True and daddy_available is True:
     summary_cli = "================ GODADDY ================"
@@ -137,8 +138,6 @@ if api_available is True and daddy_available is True:
 
     # Sending API call
     if "example_domain.com" not in api_data[0]:
-        summary_cli = "Calling daddy_api"
-        log_insert.insert(log_file, summary_cli)
         summary_cli = dns_daddy.daddy_api(
             d_key = api_data[3], 
             d_secret = api_data[4], 
