@@ -3,7 +3,7 @@
 
 If you do not have or do not want to access any DynDNS service, this solution can help you survive.
 
-> [!WARNING]
+> [!NOTE]
 > GoDaddy API is active, but it is under testing.
 
 ### login.txt
