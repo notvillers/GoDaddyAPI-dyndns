@@ -38,21 +38,25 @@ if os.path.exists(daddy_api_file):
     api_available = True
     daddy_available = True
 else:
-    log_insert.insert(log_file, daddy_api_file + " not found, generating")
+    summary_cli = daddy_api_file + " not found, generating..."
+    log_insert.insert(log_file, summary_cli)
     daddy_api_example = ["example_domain.com", "example_type (A)", "example_name (@)", "api_key_example", "api_secret_example"]
     with open(daddy_api_file, 'w') as file:
         for line in daddy_api_example:
             file.write(line + "\n")
-    log_insert.insert(log_file, daddy_api_file + " created and filled with example data!")
+    summary_cli = daddy_api_file + " created and filled with example data."
+    log_insert.insert(log_file, summary_cli)
 
 # If logint.txt is not found, then generating one
 if not os.path.exists(login_file):
-    log_insert.insert(log_file, daddy_api_file + " created and filled with example data!")
+    summary_cli = daddy_api_file + " created and filled with example data."
+    log_insert.insert(log_file, summary_cli)
     login_example = ["sender@example_mail.com", "password", "receiver@example_mail.com", "smtp.example_mail.com"]
     with open(login_file, 'w') as file:
         for line in login_example:
             file.write(line + "\n")
-    log_insert.insert(log_file, login_file + " created and filled with example data!")
+        summary_cli = login_file + " created and filled with example data."
+        log_insert.insert(log_file, summary_cli)
     send_mail = False
 
 # If ip.txt is not found, then generating one, else stores it in ip_stored
@@ -60,45 +64,55 @@ if os.path.exists(ip_file):
     file_ready = True
     with open(ip_file, 'r') as file:
         ip_stored = file.read().lstrip().rstrip()
-        log_insert.insert(log_file, "IP found in " + ip_file + ": " + ip_stored)
+        summary_cli = "IP found in " + ip_file + ": " + ip_stored + "."
+        log_insert.insert(log_file, summary_cli)
         if ip_stored != "":
             ip_ready = True
 else:
-    print(ip_file + " not found, generating...")
-    log_insert.insert(log_file, ip_file + " not found, generating...")
+    summary_cli = ip_file + " not found, generating..."
+    log_insert.insert(log_file, summary_cli)
     with open(ip_file, 'w') as file:
-        log_insert.insert(log_file, ip_file + " created")
+        summary_cli = ip_file + " created."
+        log_insert.insert(log_file, summary_cli)
 
 try:
     # Getting IP
     ip_got = get_ip.get_ip()
-    log_insert.insert(log_file, "IP got from 'icanhazip': " + ip_got)
+    summary_cli = "IP got from 'icanhazip': " + ip_got + "."
+    log_insert.insert(log_file, summary_cli)
     # Starting of the IP compare
     if ip_ready:
         # If the 2 IPs are equal it does nothing
         if ip_stored != ip_got:
             with open(ip_file, 'w') as file:
                 file.write(ip_got)
-                log_insert.insert(log_file, "IP rewrote " + ip_stored + " -> " + ip_got)
+                summary_cli = "IP rewrote " + ip_stored + " -> " + ip_got + "."
+                log_insert.insert(log_file, summary_cli)
     # If file_name was empty or it was just created then writes the actual IP in it
     else:
         with open(ip_file, 'w') as file:
             file.write(ip_got)
-            log_insert.insert(log_file, "no IP stored, storing " + ip_got)
+            summary_cli = "no IP stored, storing " + ip_got
+            log_insert.insert(log_file, summary_cli)
 except Exception as e:
-    print("Error (ip get):", str(e))
+    summary_cli = "Error (ip get): " + str(e)
+    log_insert(log_file, summary_cli)
     time.sleep(5)
     sys.exit()
 
-# Summary for CLI
+# Summary for cli and log.txt
 summary_cli = "=============== SUMMARY ================"
 log_insert.insert(log_file, summary_cli)
-summary_cli = "IP changed" if ip_stored != ip_got else "IP not changed"
-log_insert.insert(log_file, summary_cli)
-summary_cli = "IP stored: empty" if ip_stored == "" else "Stored: " + ip_stored
-log_insert.insert(log_file, summary_cli)
-summary_cli = "IP got: " + ip_got
-log_insert.insert(log_file, summary_cli)
+if ip_stored == ip_got:
+    summary_cli = "IP not changed."
+    log_insert.insert(log_file, summary_cli)
+else:
+    summary_cli = "IP changed"
+    log_insert.insert(log_file, summary_cli)
+    summary_cli = "IP stored: empty" if ip_stored == "" else "IP stored: " + ip_stored
+    log_insert.insert(log_file, summary_cli)
+    summary_cli = "IP got: " + ip_got
+    log_insert.insert(log_file, summary_cli)
 
 # If the IP changed, it sends a mail
 if (ip_stored != ip_got) and (send_mail is True):
@@ -107,16 +121,18 @@ if (ip_stored != ip_got) and (send_mail is True):
     # Reading login.txt
     with open(login_file, 'r') as login_data:
         login = [line.strip() for line in login_data.readlines()]
-
+        summary_cli = login_file + " data read."
+        log_insert.insert(log_file, summary_cli)
     # login.txt configuration check
     if login[0] == "sender@example_mail.com":
-        summary_cli = login_file + " is not configured properly, GoDaddy API not available.\nExiting..."
+        summary_cli = login_file + " is not configured properly, GoDaddy API unavailable."
         log_insert.insert(log_file, summary_cli)
     else:
         # Gets hostname from cli
         process = subprocess.Popen("hostname", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdout, stderr = process.communicate()
         hostname = stdout.decode('utf-8').lstrip().rstrip()
+        summary_cli = "Hostname found: " + hostname
 
         # Sending mail
         summary_cli = dns_email.send_email(
@@ -135,6 +151,7 @@ if (ip_stored != ip_got) and (api_available is True) and (daddy_available is Tru
     # Reading api.txt
     with open(daddy_api_file, 'r') as file:
         api_data = [line.strip() for line in file.readlines()]
+        summary_cli = daddy_api_file + " data read."
 
     # Sending API call
     if "example_domain.com" not in api_data[0]:
@@ -151,8 +168,8 @@ if (ip_stored != ip_got) and (api_available is True) and (daddy_available is Tru
             summary_cli = " ↳ Are you testing? This usually happens when no real IP change happened."
             log_insert.insert(log_file, summary_cli)
     else:
-        summary_cli = "daddy_api.txt not configured properly"
+        summary_cli = daddy_api_file + " not configured properly."
         log_insert.insert(log_file, summary_cli)
 
-summary_cli = "================= DONE ================="
+summary_cli = "================= DONE =================\n,"
 log_insert.insert(log_file, summary_cli)
