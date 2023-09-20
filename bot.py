@@ -62,6 +62,7 @@ else:
         summary_cli = ip_file + " created."
         log_insert.insert(log_file, summary_cli)
 
+# Main
 try:
     # Getting IP
     ip_got = get_ip.get_ip()
@@ -132,6 +133,7 @@ if (ip_stored != ip_got) and (send_mail is True):
         )
         log_insert.insert(log_file, summary_cli)
 
+# If api_available then is gets the data(s) from the daddy_api.json
 if api_available is True:
     summary_cli = "================ GODADDY ================"
     log_insert.insert(log_file, summary_cli)
@@ -144,6 +146,7 @@ if api_available is True:
         summary_cli = "Domains found in " + daddy_api_json_file + ": " + str(api_data_got[1])
     log_insert.insert(log_file, summary_cli)
 
+# If IP changed and api_available and daddy_available then runs the API call with the daddy_api.json's data(s)
 if (ip_stored != ip_got) and (api_available is True) and (daddy_available is True):
     summary_cli = "API call is available."
     log_insert.insert(log_file, summary_cli)
@@ -167,5 +170,6 @@ if (ip_stored != ip_got) and (api_available is True) and (daddy_available is Tru
             summary_cli = daddy_api_json_file + " not configured properly."
             log_insert.insert(log_file, summary_cli)
 
-summary_cli = "================= DONE =================\n,"
+# EOL
+summary_cli = "================= DONE =================\n"
 log_insert.insert(log_file, summary_cli)

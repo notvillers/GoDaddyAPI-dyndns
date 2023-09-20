@@ -41,26 +41,7 @@ On the first run, if you do not have the **daddy_api.json** in the running/worki
 
 ### Logging
 On the first run, if you do not have the **log.txt** in the runnin/working directory, it will generate it.
-
-Example run in the **log.txt**
-```
-2023-09-18 17:04:42: ================== GO ==================
-2023-09-18 17:04:42: stored ip: xxx.xxx.xxx.xxx
-2023-09-18 17:04:42: ip got: yyy.yyy.yyy.yyy
-2023-09-18 17:04:42: ip rewrote xxx.xxx.xxx.xxx -> yyy.yyy.yyy.yyy
-2023-09-18 17:04:42: =============== SUMMARY ================
-2023-09-18 17:04:42: IP changed
-2023-09-18 17:04:42: Stored: xxx.xxx.xxx.xxx
-2023-09-18 17:04:42: IP got: yyy.yyy.yyy.yyy
-2023-09-18 17:04:42: ================= EMAIL =================
-2023-09-18 17:04:43: Message sent!
-2023-09-18 17:04:43: ================ GODADDY ================
-2023-09-18 17:04:43: name 'updateResult' is not defined
-2023-09-18 17:04:43:  ↳ Are you testing? This usually happens when no real IP change happened.
-2023-09-18 17:04:43: ================= DONE =================
-2023-09-18 17:06:39: ================== GO ==================
-```
-_Do not mind the GoDaddy error, I just did not want to update te DNS record. :shipit:_
+When you are running it by yourself, it writes all of the logs to the cli too.
 
 ### Running it with a system daemon
 If you want to run it with a more simple utility tool, like crontab, where you can not set a running/working directory, then you should run the **bot.py** with an argument which leads to the directory where the **login.txt** and **ip.txt** are stored, for example:

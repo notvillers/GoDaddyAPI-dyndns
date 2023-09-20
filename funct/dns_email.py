@@ -1,7 +1,7 @@
 import smtplib, ssl
 from email.mime.text import MIMEText
 
-# DEF: send mail
+# DEF: sends e-mail
 def send_email(subject, body, sender, recipients, password, smtp):
     msg = MIMEText(body)
     msg['Subject'] = subject
@@ -11,4 +11,4 @@ def send_email(subject, body, sender, recipients, password, smtp):
     with smtplib.SMTP_SSL(smtp, 465, context=context) as smtp_server:
         smtp_server.login(sender, password)
         smtp_server.sendmail(sender, recipients, msg.as_string())
-        return "Message sent! (from: " + sender + " to " + ', '.join(recipients) + ")"
+        return "E-mail sent! (from: " + sender + " to " + ', '.join(recipients) + ")"
