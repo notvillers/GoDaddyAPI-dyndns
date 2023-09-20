@@ -15,17 +15,6 @@ smtp.example_mail.com
 
 _(Gmail no longer supports sending mail with an 'unsecure' solution like this.)_
 
-### Running it with a system daemon
-If you want to run it with a more simple utility tool, like crontab, where you can not set a running/working directory, then you should run the **bot.py** with an argument which leads to the directory where the **login.txt** and **ip.txt** are stored, for example:
-
-```
-*/15 * * * * python3 {path_to_directory}/bot.py {path_to_directory}
-```
-
-where `{path_to_directory}` is the full path like `/home/user/bot/`
-
-_In this instance the crontab runs the script every 15 mins._
-
 ### GoDaddy DNS update with API
 On the first run, if you do not have the **daddy_api.json** in the running/working directory, it will generate one with example data. It is necessary for the GoDaddy API and should look like this:
 
@@ -72,3 +61,14 @@ Example run in the **log.txt**
 2023-09-18 17:06:39: ================== GO ==================
 ```
 _Do not mind the GoDaddy error, I just did not want to update te DNS record. :shipit:_
+
+### Running it with a system daemon
+If you want to run it with a more simple utility tool, like crontab, where you can not set a running/working directory, then you should run the **bot.py** with an argument which leads to the directory where the **login.txt** and **ip.txt** are stored, for example:
+
+```
+*/15 * * * * python3 {path_to_directory}/bot.py {path_to_directory}
+```
+
+where `{path_to_directory}` is the full path like `/home/user/bot/`
+
+_In this instance the crontab runs the script every 15 mins._
