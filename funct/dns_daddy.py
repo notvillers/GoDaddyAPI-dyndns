@@ -16,9 +16,9 @@ def daddy_api(d_key, d_secret, d_domain, d_type, d_record, d_ip_got):
         if (d_ip_got != currentIP[0]["data"]):
             updateResult = userClient.update_record_ip(d_ip_got, d_domain, d_record, d_type)
         if updateResult is True:
-            summary_cli = "Updated DNS record to: " + d_ip_got
+            summary_cli = "Updated DNS record to: " + d_ip_got + " on " + d_domain + "."
         else:
-           summary_cli = "Checked the DNS record, no update needed."
+           summary_cli = "Checked the DNS record, no update needed on " + d_domain + "."
     except:
         summary_cli = str(sys.exc_info()[1])
     return summary_cli
