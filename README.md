@@ -3,9 +3,6 @@
 
 If you do not have or do not want to access any DynDNS service, this solution can help you survive.
 
-> [!NOTE]
-> GoDaddy API is active, but it is under testing.
-
 ### login.txt
 On the first run, if you do not have the **login.txt** in the running/working directory, it will generate one with example data. It is necessary for the email sending and should look like this:
 
@@ -30,15 +27,28 @@ where `{path_to_directory}` is the full path like `/home/user/bot/`
 _In this instance the crontab runs the script every 15 mins._
 
 ### GoDaddy DNS update with API
-On the first run, if you do not have the **daddy_api.txt** in the running/working directory, it will generate one with example data. It is necessary for the GoDaddy API and should look like this:
+On the first run, if you do not have the **daddy_api.json** in the running/working directory, it will generate one with example data. It is necessary for the GoDaddy API and should look like this:
 
 ```
-example_domain.com
-example_type (A)
-example_name (@)
-api_key_example
-api_secret_example
+[
+    {
+    "domain" : "example.com",
+    "type": "A",
+    "name": "@",
+    "api_key": "Your_API_key",
+    "api_secret": "Your_secret_API_key"
+    },
+    {
+    "domain" : "second_example.com",
+    "type": "A",
+    "name": "@",
+    "api_key": "Your_API_key",
+    "api_secret": "Your_secret_API_key"
+    },
+]
 ```
+> [!NOTE]
+> You can use any amount of instances in the daddy_api.json.
 
 ### Logging
 On the first run, if you do not have the **log.txt** in the runnin/working directory, it will generate it.

@@ -7,6 +7,7 @@ import time
 import funct.log_insert as log_insert
 import funct.get_ip as get_ip
 import funct.dns_email as dns_email
+import funct.json_read as json_read
 import funct.dns_daddy as dns_daddy
 
 # Location argument
@@ -17,7 +18,7 @@ if len(sys.argv) > 1:
 # Name of the file, which stores the IP (ipv4)
 ip_file = argument1 + "ip.txt"
 login_file = argument1 + "login.txt"
-daddy_api_file = argument1 + "daddy_api.txt"
+daddy_api_json_file = argument1 + "daddy_api.json"
 log_file = argument1 + "log.txt"
 
 # If log.txt not found, then generating one
@@ -30,26 +31,12 @@ ip_ready = False
 ip_stored = ""
 ip_got = ""
 send_mail = True
-daddy_available = False
-api_available = False
-
-# If daddy_api.txt not found, then generating one
-if os.path.exists(daddy_api_file):
-    api_available = True
-    daddy_available = True
-else:
-    summary_cli = daddy_api_file + " not found, generating..."
-    log_insert.insert(log_file, summary_cli)
-    daddy_api_example = ["example_domain.com", "example_type (A)", "example_name (@)", "api_key_example", "api_secret_example"]
-    with open(daddy_api_file, 'w') as file:
-        for line in daddy_api_example:
-            file.write(line + "\n")
-    summary_cli = daddy_api_file + " created and filled with example data."
-    log_insert.insert(log_file, summary_cli)
+daddy_available = True
+api_available = True
 
 # If logint.txt is not found, then generating one
 if not os.path.exists(login_file):
-    summary_cli = daddy_api_file + " created and filled with example data."
+    summary_cli = login_file + " created and filled with example data."
     log_insert.insert(log_file, summary_cli)
     login_example = ["sender@example_mail.com", "password", "receiver@example_mail.com", "smtp.example_mail.com"]
     with open(login_file, 'w') as file:
@@ -145,31 +132,40 @@ if (ip_stored != ip_got) and (send_mail is True):
         )
         log_insert.insert(log_file, summary_cli)
 
-if (ip_stored != ip_got) and (api_available is True) and (daddy_available is True):
+if api_available is True:
     summary_cli = "================ GODADDY ================"
     log_insert.insert(log_file, summary_cli)
-    # Reading api.txt
-    with open(daddy_api_file, 'r') as file:
-        api_data = [line.strip() for line in file.readlines()]
-        summary_cli = daddy_api_file + " data read."
-
-    # Sending API call
-    if "example_domain.com" not in api_data[0]:
-        summary_cli = dns_daddy.daddy_api(
-            d_key = api_data[3], 
-            d_secret = api_data[4], 
-            d_domain = api_data[0], 
-            d_type = api_data[1], 
-            d_record = api_data[2], 
-            d_ip_got = ip_got
-        )
-        log_insert.insert(log_file, summary_cli)
-        if "name 'updateResult' is not defined" in summary_cli:
-            summary_cli = " ↳ Are you testing? This usually happens when no real IP change happened."
-            log_insert.insert(log_file, summary_cli)
+    # daddy_api.json reader
+    api_data_got = json_read.daddy_api(daddy_api_json_file)
+    if api_data_got[1] == 0:
+        summary_cli = daddy_api_json_file + " created and filled with example data."
+        daddy_available = False
     else:
-        summary_cli = daddy_api_file + " not configured properly."
-        log_insert.insert(log_file, summary_cli)
+        summary_cli = "Domains found in " + daddy_api_json_file + ": " + str(api_data_got[1])
+    log_insert.insert(log_file, summary_cli)
+
+if (ip_stored != ip_got) and (api_available is True) and (daddy_available is True):
+    summary_cli = "API call is available."
+    log_insert.insert(log_file, summary_cli)
+    # Calling GoDaddy's API
+    for api_data in api_data_got[0]:
+        if "example.com" not in api_data[0]:
+            summary_cli = dns_daddy.daddy_api(
+                d_key = api_data[3], 
+                d_secret = api_data[4], 
+                d_domain = api_data[0], 
+                d_type = api_data[1], 
+                d_record = api_data[2], 
+                d_ip_got = ip_got
+            )
+            summary_cli = "(" + api_data[0] + ") " + summary_cli 
+            log_insert.insert(log_file, summary_cli)
+            if "name 'updateResult' is not defined" in summary_cli:
+                summary_cli = " ↳ Are you testing on ? This usually happens when no real IP change happened on."
+                log_insert.insert(log_file, summary_cli)
+        else:
+            summary_cli = daddy_api_json_file + " not configured properly."
+            log_insert.insert(log_file, summary_cli)
 
 summary_cli = "================= DONE =================\n,"
 log_insert.insert(log_file, summary_cli)
