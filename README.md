@@ -1,4 +1,6 @@
 # Daddyndns
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/GoDaddy_Logo_-_The_GO.svg/2298px-GoDaddy_Logo_-_The_GO.svg.png" alt="godaddy" width="200"/>
+
 ## Detects if your IPV4 has address changed, sends an e-mail about it and updates the GoDaddy DNS record.
 If you do not have or do not want to access any DynDNS service, this solution can help you survive.
 
@@ -38,7 +40,7 @@ You can use any amount of instances in the daddy_api.json.
 
 ### Logging
 On the first run, if you do not have the **log.txt** in the runnin/working directory, it will generate it.
-When you are running it by yourself, it writes all of the logs to the cli too.
+When you are running it by yourself, it writes all of the logs to cli too.
 
 ### Running it with a system daemon
 If you want to run it with a more simple utility tool, like crontab, where you can not set a running/working directory, then you should run the **bot.py** with an argument which leads to the directory where the **login.txt** and **ip.txt** are stored, for example:
