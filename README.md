@@ -1,5 +1,5 @@
 # Daddyndns
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/GoDaddy_Logo_-_The_GO.svg/2298px-GoDaddy_Logo_-_The_GO.svg.png" alt="godaddy" width="200"/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/GoDaddy_Logo_-_The_GO.svg/2298px-GoDaddy_Logo_-_The_GO.svg.png" alt="godaddy" width="750"/>
 
 ## Detects if your IPV4 has address changed, sends an e-mail about it and updates the GoDaddy DNS record.
 If you do not have or do not want to access any DynDNS service, this solution can help you survive.
