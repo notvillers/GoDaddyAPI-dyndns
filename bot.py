@@ -11,9 +11,11 @@ import funct.json_read as json_read
 import funct.dns_daddy as dns_daddy
 
 # Location argument
-argument1 = ""
 if len(sys.argv) > 1:
     argument1 = str(sys.argv[1])
+
+else:
+    argument1 = ""
 
 # Name of the file, which stores the IP (ipv4)
 ip_file = argument1 + "ip.txt"
@@ -39,7 +41,9 @@ if not os.path.exists(login_file):
     summary_cli = login_file + " created and filled with example data."
     log_insert.insert(log_file, summary_cli)
     login_example = ["sender@example_mail.com", "password", "receiver@example_mail.com", "smtp.example_mail.com"]
+
     with open(login_file, 'w') as file:
+
         for line in login_example:
             file.write(line + "\n")
         summary_cli = login_file + " created and filled with example data."
@@ -47,17 +51,22 @@ if not os.path.exists(login_file):
     send_mail = False
 
 # If ip.txt is not found, then generating one, else stores it in ip_stored
+
 if os.path.exists(ip_file):
     file_ready = True
+
     with open(ip_file, 'r') as file:
         ip_stored = file.read().lstrip().rstrip()
         summary_cli = "IP found in " + ip_file + ": " + ip_stored + "."
         log_insert.insert(log_file, summary_cli)
+
         if ip_stored != "":
             ip_ready = True
+
 else:
     summary_cli = ip_file + " not found, generating..."
     log_insert.insert(log_file, summary_cli)
+
     with open(ip_file, 'w') as file:
         summary_cli = ip_file + " created."
         log_insert.insert(log_file, summary_cli)
@@ -69,19 +78,25 @@ try:
     summary_cli = "IP got from 'icanhazip': " + ip_got + "."
     log_insert.insert(log_file, summary_cli)
     # Starting of the IP compare
+
     if ip_ready:
         # If the 2 IPs are equal it does nothing
+
         if ip_stored != ip_got:
+
             with open(ip_file, 'w') as file:
                 file.write(ip_got)
                 summary_cli = "IP rewrote " + ip_stored + " -> " + ip_got + "."
                 log_insert.insert(log_file, summary_cli)
     # If file_name was empty or it was just created then writes the actual IP in it
+
     else:
+
         with open(ip_file, 'w') as file:
             file.write(ip_got)
             summary_cli = "no IP stored, storing " + ip_got
             log_insert.insert(log_file, summary_cli)
+
 except Exception as e:
     summary_cli = "Error (ip get): " + str(e)
     log_insert(log_file, summary_cli)
@@ -91,9 +106,11 @@ except Exception as e:
 # Summary for cli and log.txt
 summary_cli = "=============== SUMMARY ================"
 log_insert.insert(log_file, summary_cli)
+
 if ip_stored == ip_got:
     summary_cli = "IP not changed."
     log_insert.insert(log_file, summary_cli)
+
 else:
     summary_cli = "IP changed"
     log_insert.insert(log_file, summary_cli)
@@ -106,15 +123,18 @@ else:
 if (ip_stored != ip_got) and (send_mail is True):
     summary_cli = "================= EMAIL ================="
     log_insert.insert(log_file, summary_cli)
+
     # Reading login.txt
     with open(login_file, 'r') as login_data:
         login = [line.strip() for line in login_data.readlines()]
         summary_cli = login_file + " data read."
         log_insert.insert(log_file, summary_cli)
+
     # login.txt configuration check
     if login[0] == "sender@example_mail.com":
         summary_cli = login_file + " is not configured properly, GoDaddy API unavailable."
         log_insert.insert(log_file, summary_cli)
+
     else:
         # Gets hostname from cli
         process = subprocess.Popen("hostname", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -139,9 +159,15 @@ if api_available is True:
     log_insert.insert(log_file, summary_cli)
     # daddy_api.json reader
     api_data_got = json_read.daddy_api(daddy_api_json_file)
+
     if api_data_got[1] == 0:
         summary_cli = daddy_api_json_file + " created and filled with example data."
         daddy_available = False
+
+    elif api_data_got[1] == -1:
+        summary_cli = daddy_api_json_file + " is not a valid JSON."
+        daddy_available = False
+
     else:
         summary_cli = "Domains found in " + daddy_api_json_file + ": " + str(api_data_got[1])
     log_insert.insert(log_file, summary_cli)
@@ -151,7 +177,9 @@ if (ip_stored != ip_got) and (api_available is True) and (daddy_available is Tru
     summary_cli = "API call is available."
     log_insert.insert(log_file, summary_cli)
     # Calling GoDaddy's API
+    
     for api_data in api_data_got[0]:
+
         if "example.com" not in api_data[0]:
             summary_cli = dns_daddy.daddy_api(
                 d_key = api_data[3], 
@@ -163,9 +191,11 @@ if (ip_stored != ip_got) and (api_available is True) and (daddy_available is Tru
             )
             summary_cli = "(" + api_data[0] + ") " + summary_cli 
             log_insert.insert(log_file, summary_cli)
+
             if "name 'updateResult' is not defined" in summary_cli:
                 summary_cli = " ↳ Are you testing on ? This usually happens when no real IP change happened on."
                 log_insert.insert(log_file, summary_cli)
+
         else:
             summary_cli = daddy_api_json_file + " not configured properly."
             log_insert.insert(log_file, summary_cli)
