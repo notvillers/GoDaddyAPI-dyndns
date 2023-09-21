@@ -1,6 +1,9 @@
 # Daddyndns
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/GoDaddy_Logo_-_The_GO.svg/2298px-GoDaddy_Logo_-_The_GO.svg.png" alt="godaddy" width="75"/>
 
+**Source problem:** 
+You are running a server from home and if your public IP changes then you can not access it. A DynDNS service would help you but the free ones have a slow and they are on low priority.
+
 ## Detects if your IPV4 has address changed, sends an e-mail about it and updates the GoDaddy DNS record.
 If you do not have or do not want to access any DynDNS service, this solution can help you survive.
 
