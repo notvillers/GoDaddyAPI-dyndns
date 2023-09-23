@@ -131,7 +131,7 @@ if (ip_stored != ip_got) and (send_mail is True):
         log_insert.insert(log_file, summary_cli)
 
     # login.txt configuration check
-    if login[0] == "sender@example_mail.com":
+    if login[0] == "sender@example_mail.com" and api_available == False and daddy_available == False:
         summary_cli = login_file + " is not configured properly, GoDaddy API unavailable."
         log_insert.insert(log_file, summary_cli)
 
@@ -180,7 +180,7 @@ if (ip_stored != ip_got) and (api_available is True) and (daddy_available is Tru
     
     for api_data in api_data_got[0]:
 
-        if "example.com" not in api_data[0]:
+        if api_data[0] != "example.com":
             summary_cli = dns_daddy.daddy_api(
                 d_key = api_data[3], 
                 d_secret = api_data[4], 

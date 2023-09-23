@@ -18,6 +18,8 @@ def json_validator(json_str):
 # JSON read
 def daddy_api(file):
 
+    api_list = []
+    
     if os.path.exists(file):
 
         with open(file, 'r') as json_file:
@@ -27,7 +29,6 @@ def daddy_api(file):
 
             with open(file, 'r') as json_file:
                 api_datas = json.load(json_file)
-            api_list = []
             i = 0
 
             for api_data in api_datas:
