@@ -131,8 +131,8 @@ if (ip_stored != ip_got) and (send_mail is True):
         log_insert.insert(log_file, summary_cli)
 
     # login.txt configuration check
-    if login[0] == "sender@example_mail.com" and api_available == False and daddy_available == False:
-        summary_cli = login_file + " is not configured properly, GoDaddy API unavailable."
+    if login[0] == "sender@example_mail.com":
+        summary_cli = login_file + " is not configured properly"
         log_insert.insert(log_file, summary_cli)
 
     else:
@@ -197,7 +197,7 @@ if (ip_stored != ip_got) and (api_available is True) and (daddy_available is Tru
                 log_insert.insert(log_file, summary_cli)
 
         else:
-            summary_cli = daddy_api_json_file + " not configured properly."
+            summary_cli = daddy_api_json_file + " not configured properly, you are using the example data."
             log_insert.insert(log_file, summary_cli)
 
 # EOL
