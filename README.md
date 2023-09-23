@@ -1,5 +1,5 @@
 # Daddyndns
-<img src="https://villers.website/files/godaddy_logo.png" alt="godaddy" width="75"/>
+<img src="https://raw.githubusercontent.com/notvillers/GoDaddyAPI-dyndns/main/misc/godaddy_logo.png" alt="godaddy" width="75"/>
 
 **Source problem:** You are running a server from home and if your public IP changes then you can not access it. A DynDNS service would help you but the free ones are slow and on low priority.
 
