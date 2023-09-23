@@ -37,7 +37,7 @@ On the first run, if you do not have the **daddy_api.json** in the running/worki
 ]
 ```
 You can use any amount of instances in the daddy_api.json.
-> [!NOTE]
+> [!IMPORTANT]
 > You can validate your JSON [here](https://jsonlint.com/).
 
 ### Logging
@@ -51,3 +51,7 @@ If you want to run it with a more simple utility tool, like crontab, where you c
 ```
 where `{path_to_directory}` is the full path like `/home/user/bot/`
 _In this instance the crontab runs the script every 15 mins._
+
+## Docker image
+> [!NOTE]
+> I made a docker image, but it is not tested yet, you can check it out [here](https://hub.docker.com/r/notvillers/godaddyndns).

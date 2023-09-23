@@ -3,3 +3,6 @@ login.txt
 daddy_api.txt
 log.txt
 daddy_api.json
+.dockerignore
+compose.yaml
+Dockerfile
