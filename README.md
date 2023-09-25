@@ -51,7 +51,3 @@ If you want to run it with a more simple utility tool, like crontab, where you c
 ```
 where `{path_to_directory}` is the full path like `/home/user/bot/`
 _In this instance the crontab runs the script every 15 mins._
-
-## Docker image
-> [!NOTE]
-> I made a docker image, but it is not tested yet, you can check it out [here](https://hub.docker.com/r/notvillers/godaddyndns).
