@@ -17,11 +17,18 @@ if len(sys.argv) > 1:
 else:
     argument1 = ""
 
+file_path = ""
+
+if argument1 == "":
+    file_path = os.path.dirname(__file__)
+else:
+    file_path = argument1
+
 # Name of the file, which stores the IP (ipv4)
-ip_file = argument1 + "ip.txt"
-login_file = argument1 + "login.txt"
-daddy_api_json_file = argument1 + "daddy_api.json"
-log_file = argument1 + "log.txt"
+ip_file = file_path + "ip.txt"
+login_file = file_path + "login.txt"
+daddy_api_json_file = file_path + "daddy_api.json"
+log_file = file_path + "log.txt"
 
 # If log.txt not found, then generating one
 summary_cli = "================== GO =================="
