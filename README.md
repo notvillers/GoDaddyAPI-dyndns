@@ -41,13 +41,17 @@ You can use any amount of instances in the daddy_api.json.
 > You can validate your JSON [here](https://jsonlint.com/).
 
 ### Logging
-On the first run, if you do not have the **log.txt** in the runnin/working directory, it will generate it.
-When you are running it by yourself, it writes all of the logs to cli too.
+On the first run, if you do not have the **log.txt**, it will generate it.
+When you are running it by yourself, it writes out all of the logs to cli too.
 
 ### Running it with a system daemon
-If you want to run it with a more simple utility tool, like crontab, where you can not set a running/working directory, then you should run the **bot.py** with an argument which leads to the directory where the **login.txt** and **ip.txt** are stored, for example:
+Example for runnin the bot with a simple utility tool like crontab:
 ```
-*/15 * * * * python3 {path_to_directory}/bot.py {path_to_directory}
+*/15 * * * * python3 {path_to_directory}/bot.py
 ```
-where `{path_to_directory}` is the full path like `/home/user/bot/`
-_In this instance the crontab runs the script every 15 mins._
+> [!NOTE]
+> Removed the argument to add running/working directory, because I switched to `os.path.dirname(__file__)`.
+
+### GUI
+You can setup your **daddy_api.json** by hand with the **gui.py**.
+In the near future this will be the main direction.
