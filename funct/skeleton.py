@@ -35,10 +35,7 @@ def run(path):
 
     # If logint.txt is not found, then generating one
     if not os.path.exists(login_file):
-        summary_cli = login_file + " created and filled with example data."
-        def_log.append(log_insert.insert(log_file, summary_cli, True))
         login_example = ["sender@example_mail.com", "password", "receiver@example_mail.com", "smtp.example_mail.com"]
-
         with open(login_file, 'w') as file:
 
             for line in login_example:
@@ -109,9 +106,9 @@ def run(path):
     else:
         summary_cli = "IP changed"
         def_log.append(log_insert.insert(log_file, summary_cli, True))
-        summary_cli = "IP stored: empty" if ip_stored == "" else "IP stored: " + ip_stored
+        summary_cli = "IP got: " + ip_got
         def_log.append(log_insert.insert(log_file, summary_cli, True))
-        def_log.append(summary_cli)
+        summary_cli = "IP stored: empty" if ip_stored == "" else "IP stored: " + ip_stored
         def_log.append(log_insert.insert(log_file, summary_cli, True))
 
     # If the IP changed, it sends a mail
