@@ -5,7 +5,7 @@ from tkinter import font
 import json
 import funct.log_insert as log_insert
 import funct.json_read as json_read
-import skeleton
+import funct.skeleton as skeleton
 import os
 
 file_path = os.path.dirname(__file__) + "/"
