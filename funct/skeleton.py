@@ -10,10 +10,10 @@ import funct.dns_email as dns_email
 import funct.json_read as json_read
 import funct.dns_daddy as dns_daddy
 
-file_path = os.path.dirname(__file__) + "/"
-
-def run():
+def run(path):
     def_log = []
+
+    file_path = path
 
     # Name of the file, which stores the IP (ipv4)
     ip_file = file_path + "ip.txt"
@@ -100,8 +100,7 @@ def run():
 
     # Summary for cli and log.txt
     summary_cli = "=============== SUMMARY ================"
-    def_log.append("==== SUMMARY")
-    log_insert.insert(log_file, summary_cli, True)
+    def_log.append(log_insert.insert(log_file, summary_cli, True))
 
     if ip_stored == ip_got:
         summary_cli = "IP not changed."

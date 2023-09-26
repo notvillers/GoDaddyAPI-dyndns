@@ -11,4 +11,4 @@ summary_cly = "bot.py started"
 
 log_insert.insert(log_file, summary_cly, True)
 
-skeleton.run()
+skeleton.run(file_path)

@@ -16,3 +16,5 @@ def insert(log_file, summary_cli, cli):
    
     with open(log_file, 'a') as file: 
         file.write(current_time + ": " + summary_cli + "\n")
+
+    return summary_cli

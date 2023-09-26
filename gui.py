@@ -58,7 +58,7 @@ def save_data_to_json():
     log_insert.insert(log_file, summary_cli, False)
 
 def run_bot():
-    def_log = skeleton.run()
+    def_log = skeleton.run(file_path)
     create_text_boxes(def_log)
 
 def json_input_gui_delete():
@@ -75,11 +75,8 @@ def json_input_gui_delete():
     save_button.pack_forget()
 
 def create_text_boxes(list):
-    num_boxes = len(list)
 
     # Remove existing text entry widgets
-    widget_not_to_destroy = [bot_run_button]
-    print(root.winfo_children())
     for widget in root.winfo_children():
         if widget != bot_run_button:
             widget.pack_forget()
