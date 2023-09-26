@@ -55,4 +55,4 @@ Example for runnin the bot with a simple utility tool like crontab:
 ### GUI
 You can setup your **daddy_api.json** by hand with the **gui.py**.
 In the near future this will be the main direction.
-<img src="https://raw.githubusercontent.com/notvillers/GoDaddyAPI-dyndns/main/misc/gui_json.png" alt="godaddy" width="400"/>
+![GUI](https://raw.githubusercontent.com/notvillers/GoDaddyAPI-dyndns/main/misc/gui_json.png")
