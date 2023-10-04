@@ -45,7 +45,7 @@ On the first run, if you do not have the **log.txt**, it will generate it.
 When you are running it by yourself, it writes out all of the logs to cli too.
 
 ### Running it with a system daemon
-Example for runnin the bot with a simple utility tool like crontab:
+Example for running the bot with a simple utility tool like crontab:
 ```
 */15 * * * * python3 {path_to_directory}/bot.py
 ```
