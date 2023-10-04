@@ -3,7 +3,7 @@
 
 **Source problem:** You are running a server from home and if your public IP changes then you can not access it. A DynDNS service would help you but the free ones are slow and on low priority.
 
-## Detects if your IPV4 has address changed, sends an e-mail about it and updates the GoDaddy DNS record.
+## Detects if your IPV4 address has been changed, sends an e-mail about it and updates the GoDaddy DNS record.
 If you do not have or do not want to access any DynDNS service, this solution can help you survive.
 
 ### login.txt
@@ -49,6 +49,8 @@ Example for runnin the bot with a simple utility tool like crontab:
 ```
 */15 * * * * python3 {path_to_directory}/bot.py
 ```
+_In this instance the script runs every 15 minutes._
+
 > [!NOTE]
 > Removed the argument to add running/working directory, because I switched to `os.path.dirname(__file__)`.
 
