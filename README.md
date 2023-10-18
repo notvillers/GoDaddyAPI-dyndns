@@ -53,8 +53,3 @@ _In this instance the script runs every 15 minutes._
 
 > [!NOTE]
 > Removed the argument to add running/working directory, because I switched to `os.path.dirname(__file__)`.
-
-### GUI
-You can setup your **daddy_api.json** by hand with the **gui.py**.
-In the near future this will be the main direction.
-![GUI](https://raw.githubusercontent.com/notvillers/GoDaddyAPI-dyndns/main/misc/gui_json.png)
