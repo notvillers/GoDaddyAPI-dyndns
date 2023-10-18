@@ -1,1 +1,7 @@
-GoDaddyPy==2.3.4
+certifi==2023.7.22
+charset-normalizer==3.3.0
+GoDaddyPy==2.4.1
+idna==3.4
+PySimpleGUI==4.60.5
+requests==2.31.0
+urllib3==2.0.7
