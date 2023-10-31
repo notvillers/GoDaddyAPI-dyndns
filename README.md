@@ -49,8 +49,7 @@ Example for running the bot with a simple utility tool like crontab:
 ```
 */15 * * * * python3 {path_to_directory}/bot.py
 ```
-_In this instance the script runs every 15 minutes._
-
+_(In this instance the script runs every 15 minutes.)_
 A [helping hand](https://cron.help/) for the crontab syntax.
 
 > [!NOTE]
