@@ -51,5 +51,7 @@ Example for running the bot with a simple utility tool like crontab:
 ```
 _In this instance the script runs every 15 minutes._
 
+A [helping hand](https://cron.help/) for the crontab syntax.
+
 > [!NOTE]
 > Removed the argument to add running/working directory, because I switched to `os.path.dirname(__file__)`.
