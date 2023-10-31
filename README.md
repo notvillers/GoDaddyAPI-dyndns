@@ -37,7 +37,7 @@ On the first run, if you do not have the **daddy_api.json** in the running/worki
 ]
 ```
 You can use any amount of instances in the daddy_api.json.
-> [!IMPORTANT]
+> [!NOTE]
 > You can validate your JSON [here](https://jsonlint.com/).
 
 ### Logging
@@ -50,7 +50,5 @@ Example for running the bot with a simple utility tool like crontab:
 */15 * * * * python3 {path_to_directory}/bot.py
 ```
 _(In this instance the script runs every 15 minutes.)_
-A [helping hand](https://cron.help/) for the crontab syntax.
-
 > [!NOTE]
-> Removed the argument to add running/working directory, because I switched to `os.path.dirname(__file__)`.
+> A [helping hand](https://cron.help/) for the crontab syntax.
